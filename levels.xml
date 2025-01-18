@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<levels>
+    <level name="TEST">
+        <begin>10</begin>
+        <end>15</end>
+    </level>
+</levels>
