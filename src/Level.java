@@ -15,9 +15,9 @@ public class Level {
     private static Hashtable<String, Level> levels = new Hashtable<String, Level>();
     private static final String LEVELS_FILE = "levels.xml";
 
-    private int begin;
-    private int end;
-    private String nameLevel;
+    private final int begin;
+    private final int end;
+    private final String nameLevel;
 
     Level(int begin, int end, String name) {
         this.begin = begin;

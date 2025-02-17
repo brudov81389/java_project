@@ -5,11 +5,15 @@ class Menu {
     private final Player mainPlayer;
 
     public Menu() {
+        PlayerPrivileges.loadChampions();
+        PlayerPrivileges.loadLeaders();
+
         System.out.print("Write your username: ");
         String username = scanner.nextLine();
         this.mainPlayer = new Player(false, username);
         System.out.printf("\n\tWelcome to the Number Guessing Game, %s!\n", username);
         Level.initLevels();
+
     }
 
     public Boolean show() {
@@ -25,7 +29,7 @@ class Menu {
                  ----------------------
                  0. Exit.\s
                  \
-                """);
+               """);
         Scanner scan = new Scanner(System.in);
         String choose = scan.nextLine();
         return switch (choose) {
@@ -74,7 +78,7 @@ class Menu {
 
     public Game crossGame(){
         Player host = new Player(true, "HOST");
-        List<Player> gamblers = new ArrayList<Player>();
+        List<Player> gamblers = new ArrayList<>();
 
         gamblers.add(this.mainPlayer);
 
@@ -91,25 +95,15 @@ class Menu {
         System.out.print("Choose amount of gamblers: ");
         Scanner scan = new Scanner(System.in);
         int amountPlayers = Integer.parseInt(scan.nextLine());
-        List<Player> gamblers = new ArrayList<Player>();
-        gamblers.add(this.mainPlayer);
-        System.out.printf("\nPlayer 1: %s\n", this.mainPlayer.getUsername());
 
-        for(int i = 1; i < amountPlayers; i++){
-            System.out.printf("\nPlayer %d, username : \n", i + 1);
-            String username = scan.nextLine();
-            Player gambler = new Player(false, username);
-            gamblers.add(gambler);
-        }
-
-        return new MultiplayerGame(host, gamblers, Level.chooseLevel());
+        return new MultiplayerGame(host, getGamblers(amountPlayers), Level.chooseLevel());
     }
 
     public TournamentGame tournament(){
         // Create bot as host for all games in tournament
         Player host = new Player(true, "HOST");
         // Get amount of players
-        System.out.println("Choose amount of gamblers: ");
+        System.out.print("\nChoose amount of gamblers: ");
         Scanner scan = new Scanner(System.in);
         int amountPlayers = scan.nextInt();
 
@@ -119,19 +113,7 @@ class Menu {
         if ((format % 2 == 0) && (format > 0))
             format -= 1;
 
-        List<Player> gamblers = new ArrayList<Player>();
-        gamblers.add(this.mainPlayer);
-        System.out.printf("\nPlayer 1: %s\n", this.mainPlayer.getUsername());
-        scan = new Scanner(System.in);
-        for(int i = 1; i < amountPlayers; i++){
-            System.out.printf("\nPlayer %d, username : \n", i + 1);
-            String username = scan.next();
-            //String username = scanner.nextLine();
-            Player gambler = new Player(false, username);
-            gamblers.add(gambler);
-        }
-
-        return new TournamentGame(host, gamblers,Level.chooseLevel(),format);
+        return new TournamentGame(host, getGamblers(amountPlayers), Level.chooseLevel(), format);
 
     }
 
@@ -148,7 +130,7 @@ class Menu {
     private Boolean chooseHost() {
         System.out.println("\n Do you want to invent number ( Y - yes, N - no) ?\n If you press another key Bot`ll invent the number.\n");
         String playerChoice = scanner.nextLine();
-        return playerChoice.equals("y") || playerChoice.equals("Y");
+        return !(playerChoice.equals("y") || playerChoice.equals("Y"));
     }
 
     private Player createBot(){
@@ -156,5 +138,20 @@ class Menu {
         System.out.print("Write BOT name: ");
         String botName = scanner.nextLine();
         return new Player(true, botName);
+    }
+
+    private List<Player> getGamblers(int amountPlayers){
+        Scanner scan = new Scanner(System.in);
+        List<Player> gamblers = new ArrayList<>();
+        gamblers.add(this.mainPlayer);
+        System.out.printf("\nPlayer 1: %s", this.mainPlayer.getUsername());
+
+        for(int i = 1; i < amountPlayers; i++){
+            System.out.printf("\nPlayer %d, username : \n", i + 1);
+            String username = scan.nextLine();
+            Player gambler = new Player(false, username);
+            gamblers.add(gambler);
+        }
+        return gamblers;
     }
 }

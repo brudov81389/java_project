@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<player>
+  <single>
+    <difficulty level="Medium">-1</difficulty>
+  </single>
+  <multiplayer>
+    <win>0</win>
+    <lose>0</lose>
+  </multiplayer>
+</player>

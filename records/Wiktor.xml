@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<player>
+  <single/>
+  <multiplayer>
+    <win>1</win>
+    <lose>1</lose>
+  </multiplayer>
+</player>

@@ -20,8 +20,8 @@ public class Game {
     public void play()
     {
         System.out.printf("Game started! The range is %d to %d\n",level.getBegin(), level.getEnd());
-        int attempts = 0;
-        boolean isPlay = true;
+        int attempts;
+        boolean isPlay;
         do{
             if (host.isBot()) {
                 attempts = playerGuesses();
@@ -33,7 +33,7 @@ public class Game {
             if ((attempts < b_score) || (b_score == -1)){
                 StatOne.getInstance().writeStat(gambler.getUsername(), level.getNameLevel(), attempts);
             }
-            isPlay = repeat();
+            isPlay = repeat(null);
             if(isPlay)
                 changeLevel();
         }
@@ -89,23 +89,28 @@ public class Game {
     }
 
 
-    protected Boolean repeat()
+    protected Boolean repeat(Player player)
     {
-        System.out.println("\nDo you want try again ?");
+        if(player == null) {
+            System.out.println("\nDo you want try again ?");
+            System.out.println("Press 'y' if you want to continue or another key for back to menu game and change another mode\n");
+        }
+        else {
+            System.out.printf("\n%s, do you want try again ?", player.getUsername());
+        }
+        String player_choice;
+        player_choice = this.scan.nextLine();
         System.out.println("Press 'y' if you want to continue or another key for back to menu game and change another mode\n");
-        String player_choice = this.scan.nextLine();
         return player_choice.equals("y") || player_choice.equals("Y");
     }
 
-    protected boolean changeLevel(){
+    protected void changeLevel(){
         System.out.println("\nDo you want change difficulty ?");
         System.out.println("Press 'y' if you want, or another key for play with current difficulty.\n");
         String player_choice = this.scan.nextLine();
         if(player_choice.equals("y") || player_choice.equals("Y")){
             level = Level.chooseLevel();
-            return true;
         }
-        return false;
     }
 
 }

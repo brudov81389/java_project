@@ -9,8 +9,9 @@ import java.util.ArrayList;
 public class PlayerPrivileges {
     private static final String CHAMPIONS_FILE = "champions.xml";
     private static final String LEADERS_FILE = "leaders.xml";
-    private static ArrayList<String> champions = new ArrayList<>();
-    private static ArrayList<String> leaders = new ArrayList<>();
+    private final static ArrayList<String> champions = new ArrayList<>();
+    private final static ArrayList<String> leaders = new ArrayList<>();
+
 
     // Add player to the champions list
     public static void grantChampion(String username) {
@@ -20,7 +21,7 @@ public class PlayerPrivileges {
 
     // Remove status of champion
     public static void revokeChampion(String username) {
-        champions.add(username);
+        champions.remove(username);
         saveChampions();
     }
 
@@ -37,7 +38,7 @@ public class PlayerPrivileges {
 
     // Remove player from leader list
     public static void revokeLeader(String username) {
-        leaders.add(username);
+        leaders.remove(username);
         saveLeaders();
     }
 
